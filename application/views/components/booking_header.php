@@ -10,11 +10,8 @@
     <div id="company-name">
         <img src="<?= vars('company_logo') ?: base_url('assets/img/logo.png') ?>" alt="logo" id="company-logo">
 
-        <span>
-            <?= e($company_name) ?>
-        </span>
-
-        <div class="d-flex justify-content-center justify-content-md-start">
+        <div class="brand-text">
+            <span class="brand-name"><?= e($company_name) ?></span>
             <span class="display-booking-selection">
                 <?= lang('service') ?> │ <?= lang('provider') ?>
             </span>
@@ -27,15 +24,17 @@
             <strong>1</strong>
         </div>
 
-        <div id="step-2" class="book-step" data-bs-toggle="tooltip"
+        <div id="step-2" class="book-step"
              data-tippy-content="<?= lang('appointment_date_and_time') ?>">
             <strong>2</strong>
         </div>
-        <div id="step-3" class="book-step" data-bs-toggle="tooltip"
+
+        <div id="step-3" class="book-step"
              data-tippy-content="<?= lang('customer_information') ?>">
             <strong>3</strong>
         </div>
-        <div id="step-4" class="book-step" data-bs-toggle="tooltip"
+
+        <div id="step-4" class="book-step"
              data-tippy-content="<?= lang('appointment_confirmation') ?>">
             <strong>4</strong>
         </div>

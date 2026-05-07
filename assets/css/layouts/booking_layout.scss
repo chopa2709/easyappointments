@@ -9,266 +9,621 @@
  * @since       v1.5.0
  * ---------------------------------------------------------------------------- */
 
-root {
+:root {
     display: block;
+    --booking-radius: 20px;
+    --booking-shadow: 0 24px 80px rgba(0, 0, 0, 0.10), 0 4px 20px rgba(0, 0, 0, 0.06);
+    --step-inactive-bg: rgba(255, 255, 255, 0.18);
+    --step-active-bg: #ffffff;
+    --frame-padding: 40px;
 }
 
 html,
 body {
     height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(145deg, #eef4f1 0%, #e5efe9 50%, #dceae3 100%);
+    background-attachment: fixed;
 }
 
 #main {
     min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
-/* BOOK APPOINTMENT WIZARD
- ------------------------------------------------------------------------------ */
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================================
+   WIZARD CARD
+   ============================================================ */
 
 #book-appointment-wizard {
+    background: #ffffff;
+    border-radius: var(--booking-radius);
+    box-shadow: var(--booking-shadow);
+    overflow: hidden;
+    margin: auto;
     min-height: 480px;
     padding: 0;
-    margin: auto;
-}
 
-#book-appointment-wizard #header {
-    overflow: auto;
-    height: auto;
-    padding: 20px 15px;
-    background: #429a82;
-}
+    /* -------------------------------------------------------
+       HEADER
+       ------------------------------------------------------- */
 
-#book-appointment-wizard #company-name {
-    float: none;
-    display: block;
-    text-align: center;
-    font-size: 24px;
-    font-weight: lighter;
-    color: #fff;
-    margin: 20px 0;
-
-    #company-logo {
-        display: block;
-        margin: 14px auto;
-        max-height: 56px;
+    #header {
+        background: #429a82;
+        padding: 22px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
     }
 
-    .display-booking-selection {
-        color: #225d4d;
-        border-right-color: #225d4d !important;
-        font-size: 60%;
-        font-weight: normal;
+    #company-name {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex: 1;
+        min-width: 0;
+
+        #company-logo {
+            height: 42px;
+            width: auto;
+            border-radius: 10px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .display-booking-selection {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+    }
+
+    /* -------------------------------------------------------
+       STEP INDICATORS
+       ------------------------------------------------------- */
+
+    #steps {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        flex-shrink: 0;
+    }
+
+    .book-step {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--step-inactive-bg);
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+        float: none;
+        margin: 0;
+        padding: 0;
+
+        strong {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.65);
+            display: block;
+            text-align: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        &:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: calc(100% + 3px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    .book-step + .book-step {
+        margin-left: 24px;
+    }
+
+    .active-step {
+        width: 40px;
+        height: 40px;
+        background: #ffffff;
+        border-color: #ffffff;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+
+        strong {
+            font-size: 16px;
+            font-weight: 700;
+            color: #429a82;
+        }
+    }
+
+    /* -------------------------------------------------------
+       WIZARD FRAMES
+       ------------------------------------------------------- */
+
+    .wizard-frame {
+        padding: var(--frame-padding);
+
+        .frame-container {
+            min-height: 440px;
+            height: auto;
+        }
+
+        .frame-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
+        }
+
+        .frame-content {
+            float: none;
+        }
+
+        .command-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #f3f4f6;
+            float: none;
+
+            .btn {
+                min-width: 130px;
+                padding: 11px 26px;
+                border-radius: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                letter-spacing: 0.01em;
+                transition: all 0.2s ease;
+                margin-right: 0;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &.btn-outline-secondary {
+                    border-color: #e5e7eb;
+                    color: #6b7280;
+                    background: transparent;
+
+                    &:hover {
+                        background: #f9fafb;
+                        border-color: #d1d5db;
+                        color: #374151;
+                    }
+                }
+
+                &.btn-dark, &.btn-primary {
+                    background: #429a82;
+                    border-color: #429a82;
+                    color: #ffffff;
+
+                    &:hover {
+                        background: #357a68;
+                        border-color: #357a68;
+                        transform: translateY(-1px);
+                        box-shadow: 0 4px 12px rgba(66, 154, 130, 0.35);
+                    }
+
+                    &:active {
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+
+        #book-appointment-submit {
+            width: 100%;
+            margin-right: 0;
+        }
+
+        .flatpickr-calendar {
+            margin: 0 auto 24px;
+        }
+
+        #select-time {
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    /* -------------------------------------------------------
+       STEP 1 - SERVICE SELECTION
+       ------------------------------------------------------- */
+
+    #wizard-frame-1 {
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        select.form-select {
+            margin-bottom: 20px;
+        }
+    }
+
+    /* -------------------------------------------------------
+       STEP 2 - DATE & TIME
+       ------------------------------------------------------- */
+
+    #select-timezone {
+        margin-bottom: 20px;
+    }
+
+    #available-hours {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 0;
+        margin: 16px 0 0;
+        max-height: 340px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: auto;
+
+        scrollbar-width: thin;
+        scrollbar-color: #d1d5db transparent;
+
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 999px;
+        }
+
+        div {
+            margin-right: 0;
+        }
+
+        .available-hour {
+            width: 100%;
+            padding: 12px 16px;
+            text-align: left;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            background: #ffffff;
+            transition: all 0.18s ease;
+            margin-bottom: 0;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+
+            &::before {
+                content: '';
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                border: 2px solid #d1d5db;
+                margin-right: 12px;
+                flex-shrink: 0;
+                transition: all 0.18s ease;
+            }
+
+            &:hover {
+                border-color: #429a82;
+                background: #f0faf7;
+                color: #2d7a65;
+
+                &::before {
+                    border-color: #429a82;
+                }
+            }
+        }
+
+        .selected-hour {
+            background: #f0faf7;
+            border-color: #429a82;
+            color: #2d7a65;
+            font-weight: 600;
+
+            &::before {
+                background: #429a82;
+                border-color: #429a82;
+            }
+
+            &:hover {
+                background: #e6f7f3;
+            }
+        }
+    }
+
+    /* -------------------------------------------------------
+       STEP 3 - CUSTOMER INFO
+       ------------------------------------------------------- */
+
+    #wizard-frame-3 {
+        label.form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+        }
+    }
+
+    /* -------------------------------------------------------
+       STEP 4 - CONFIRMATION
+       ------------------------------------------------------- */
+
+    #wizard-frame-4 {
+        .frame-container .frame-content {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+    }
+
+    #appointment-details,
+    #customer-details {
+        p {
+            font-size: 14px;
+            line-height: 1.9;
+            color: #4b5563;
+            margin: 0;
+        }
+    }
+
+    #book-appointment-form {
+        display: inline-block;
+    }
+
+    /* -------------------------------------------------------
+       FORM CONTROLS
+       ------------------------------------------------------- */
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        border: 1.5px solid #e5e7eb;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: #111827;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+            border-color: #429a82;
+            box-shadow: 0 0 0 3px rgba(66, 154, 130, 0.12);
+            outline: none;
+        }
+    }
+
+    /* -------------------------------------------------------
+       CAPTCHA
+       ------------------------------------------------------- */
+
+    .captcha-title {
+        float: left;
+        margin: 7px 0 10px 0;
+
+        .fa-sync-alt {
+            cursor: pointer;
+            transition: all 0.3s linear;
+
+            &:hover {
+                color: #429a82;
+            }
+        }
+    }
+
+    .captcha-image {
+        float: left;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+
+    .captcha-text {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* -------------------------------------------------------
+       SERVICE DESCRIPTION
+       ------------------------------------------------------- */
+
+    #service-description {
+        overflow-y: auto;
+        clear: both;
+        max-height: 120px;
+        box-shadow: none;
+        font-size: 13px;
+        color: #6b7280;
+        line-height: 1.6;
+        margin-top: 4px;
+        padding: 10px 12px;
+        background: #f9fafb;
+        border-radius: 8px;
+        border: 1px solid #f3f4f6;
+    }
+
+    /* -------------------------------------------------------
+       FOOTER
+       ------------------------------------------------------- */
+
+    #frame-footer {
+        padding: 14px 32px;
+        text-align: center;
+        border-top: 1px solid #f3f4f6;
+        background: #fafafa;
+
+        small {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    #select-language {
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 5px 0;
+        font-size: 12px;
+        border-radius: 6px;
+        min-width: auto;
+    }
+
+    .backend-link {
+        display: inline-block;
+        min-width: auto;
+        padding: 5px 12px;
+        margin: 5px 0;
+        font-size: 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    .footer-powered-by {
+        text-align: left;
+        padding: 5px 0;
+        font-size: 12px;
+        color: #9ca3af;
+
+        a {
+            color: #429a82;
+            text-decoration: none;
+            font-weight: 500;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .footer-options {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* -------------------------------------------------------
+       FORM MESSAGE
+       ------------------------------------------------------- */
+
+    #form-message {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* -------------------------------------------------------
+       MISC
+       ------------------------------------------------------- */
+
+    .span3 {
+        min-width: 270px;
     }
 }
 
-#book-appointment-wizard #steps {
-    float: none;
-    display: block;
-    overflow: auto;
-    margin: 15px auto;
-    width: 190px;
-}
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 
-#book-appointment-wizard #book-appointment-form #book-appointment-submit {
-    width: 100%;
-    margin-right: 0;
-}
+@media (max-width: 767px) {
+    :root {
+        --frame-padding: 24px 20px;
+    }
 
-#book-appointment-wizard #form-message {
-    text-align: center;
-    margin-bottom: 30px;
-}
+    #book-appointment-wizard {
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
 
-#book-appointment-wizard .wizard-frame {
-    height: auto;
-    padding: 15px;
-}
+        #header {
+            padding: 18px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
 
-#book-appointment-wizard .wizard-frame .frame-container {
-    height: auto;
-    min-height: 500px;
-    padding: 15px 0;
-}
+        #steps {
+            align-self: center;
+        }
 
-#book-appointment-wizard .frame-container .frame-title {
-    font-weight: lighter;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #666;
-}
+        #company-name {
+            .brand-name {
+                font-size: 16px;
+            }
+        }
 
-#book-appointment-wizard .frame-container .frame-content {
-    float: none;
-}
+        .wizard-frame {
+            .frame-title {
+                font-size: 18px;
+                margin-bottom: 24px;
+            }
 
-#book-appointment-wizard .wizard-frame .command-buttons {
-    float: none;
-    margin: 15px auto;
-    text-align: center;
-}
+            .command-buttons {
+                .btn {
+                    min-width: 100px;
+                    padding: 10px 18px;
+                }
+            }
+        }
 
-#book-appointment-wizard .wizard-frame .command-buttons .btn {
-    min-width: 120px;
-    margin-right: 10px;
-}
-
-#book-appointment-wizard .wizard-frame .command-buttons .btn:last-child {
-    margin-right: 0;
-}
-
-#book-appointment-wizard .wizard-frame .flatpickr-calendar {
-    margin: 25px auto;
-}
-
-#book-appointment-wizard .wizard-frame #select-time {
-    max-width: 288px;
-    margin: auto;
-    padding: 15px 0;
-}
-
-#book-appointment-wizard .book-step {
-    display: inline-block;
-    height: 35px;
-    width: 35px;
-    float: left;
-    background: #225d4d;
-    padding: 8px;
-    margin-right: 12px;
-    margin-top: 6px;
-    border-radius: 0.25rem;
-    transition: all 0.3s linear;
-}
-
-#book-appointment-wizard .book-step:last-child {
-    margin-right: 0;
-}
-
-#book-appointment-wizard .book-step strong {
-    font-size: 12px;
-    display: block;
-    text-align: center;
-    color: #0bb98d;
-    transition: all 0.3s linear;
-    cursor: default;
-}
-
-#book-appointment-wizard .active-step {
-    display: inline-block;
-    height: 45px;
-    width: 45px;
-    float: left;
-    background: #fff;
-    padding: 7px;
-    margin-right: 13px;
-    margin-top: 0;
-}
-
-#book-appointment-wizard .active-step strong {
-    color: #429a82;
-    font-size: 21px;
-}
-
-#book-appointment-wizard #frame-footer {
-    padding: 15px;
-    text-align: center;
-    border-top: 1px solid #ebeef1;
-}
-
-#book-appointment-wizard #available-hours {
-    overflow: auto;
-    margin: 15px 0;
-    padding-right: 10px;
-    width: auto;
-    max-height: 250px;
-}
-
-#book-appointment-wizard #available-hours div {
-    margin-right: 30px;
-}
-
-#book-appointment-wizard #available-hours .available-hour {
-    margin-bottom: 10px;
-}
-
-#book-appointment-wizard #available-hours .selected-hour {
-    background-color: #439a82;
-    border-color: #439a82;
-    color: white;
-}
-
-#book-appointment-wizard .span3 {
-    min-width: 270px; /* This is especially needed for ie8 */
-}
-
-#book-appointment-wizard #select-timezone {
-    margin-bottom: 15px;
-}
-
-#book-appointment-wizard #appointment-details p,
-#book-appointment-wizard #customer-details p {
-    font-size: 16px;
-    line-height: 28px;
-}
-
-#book-appointment-wizard #wizard-frame-1 label {
-    font-size: 19px;
-    margin-bottom: 12px;
-}
-
-#book-appointment-wizard #wizard-frame-1 select {
-    margin-bottom: 25px;
-}
-
-#book-appointment-wizard .captcha-title {
-    float: left;
-    margin: 7px 0 10px 0;
-}
-
-#book-appointment-wizard .captcha-title .fa-sync-alt {
-    cursor: pointer;
-    transition: all 0.3s linear;
-}
-
-#book-appointment-wizard .captcha-title .fa-sync-alt:hover {
-    color: #1a865f;
-}
-
-#book-appointment-wizard .captcha-image {
-    float: left;
-    margin-bottom: 20px;
-    border-radius: 3px;
-}
-
-#book-appointment-wizard .captcha-text {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-#book-appointment-wizard #service-description {
-    overflow-y: auto;
-    clear: both;
-    max-height: 153px;
-    box-shadow: none;
-}
-
-#book-appointment-wizard #select-language,
-#book-appointment-wizard .backend-link {
-    display: block;
-    min-width: 120px;
-    margin: 15px auto;
-    padding: 5px;
-}
-
-.popover .popover-title {
-    text-align: center;
-}
-
-.popover .popover-content #language-list .language {
-    margin: 15px 0;
-}
-
-#book-appointment-wizard #wizard-frame-4 .frame-container .frame-content {
-    max-width: 630px;
+        #available-hours {
+            grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+        }
+    }
 }
 
 @media (min-width: 768px) {
@@ -277,90 +632,64 @@ body {
     }
 
     #book-appointment-wizard {
-        border-radius: 0.25rem;
-        overflow: hidden;
-        box-shadow: rgba(138, 195, 255, 0.12) 0 1px 5px 0;
-    }
-
-    #book-appointment-wizard #company-name {
-        text-align: left;
-        display: inline-block;
-        float: left;
-        margin: 0 auto;
-        min-width: 400px;
-        line-height: 1.4;
-
-        #company-logo {
-            display: inline-block;
-            float: left;
-            margin-right: 14px;
-            margin-top: 0;
-            margin-bottom: 0;
+        #header {
+            flex-direction: row;
+            align-items: center;
         }
-    }
 
-    #book-appointment-wizard #steps {
-        display: inline-block;
-        float: right;
-        margin: 5px auto;
-    }
+        #company-name {
+            .brand-text {
+                flex-direction: column;
+            }
+        }
 
-    #book-appointment-wizard .wizard-frame {
-        padding: 10px 20px;
-    }
+        .wizard-frame {
+            .command-buttons {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
 
-    #book-appointment-wizard .wizard-frame .command-buttons {
-        display: flex;
-        justify-content: space-between;
-    }
+        #frame-footer small {
+            display: flex;
+        }
 
-    #book-appointment-wizard .captcha-title {
-        margin-right: 20px;
-        margin-top: 7px;
-    }
+        .footer-powered-by,
+        .footer-options {
+            width: 50%;
+        }
 
-    #book-appointment-wizard .captcha-image {
-        float: right;
-    }
+        .footer-powered-by {
+            text-align: left;
+        }
 
-    #book-appointment-wizard #select-language {
-        width: 100px;
-        padding: 5px;
-        margin: 5px auto;
-    }
+        .footer-options {
+            text-align: right;
+            justify-content: flex-end;
+        }
 
-    #book-appointment-wizard #frame-footer small {
-        display: flex;
-    }
+        #select-language {
+            display: inline-block;
+        }
 
-    #book-appointment-wizard .footer-powered-by,
-    #book-appointment-wizard .footer-options {
-        width: 50%;
-    }
+        .backend-link {
+            display: inline-block;
+        }
 
-    #book-appointment-wizard .footer-powered-by {
-        text-align: left;
-        padding: 5px 5px 5px 0;
-    }
+        .captcha-image {
+            float: right;
+        }
 
-    #book-appointment-wizard .footer-options {
-        text-align: right;
-    }
-
-    #book-appointment-wizard #select-language {
-        display: inline-block;
-    }
-
-    #book-appointment-wizard .backend-link {
-        display: inline-block;
-        min-width: 120px;
-        padding: 5px;
-        margin: 5px 0;
+        .captcha-title {
+            margin-right: 20px;
+            margin-top: 7px;
+        }
     }
 }
 
-/* BOOK SUCCESS & MESSAGE
-   ------------------------------------------------------------------------- */
+/* ============================================================
+   BOOKING SUCCESS & MESSAGE
+   ============================================================ */
 
 #message-frame,
 #success-frame {
@@ -368,28 +697,29 @@ body {
     text-align: center;
     height: auto;
     border: none;
-    padding: 35px;
-}
+    padding: 48px 40px;
 
-#message-frame .alert,
-#success-frame .alert {
-    margin-top: 20px;
-}
+    .alert {
+        margin-top: 20px;
+        border-radius: 10px;
+    }
 
-#message-frame #message-icon,
-#success-frame #success-icon {
-    margin-top: 20px;
-    margin-right: 20px;
-    width: 64px;
-    display: block;
-    margin: auto;
-    float: none !important;
-}
+    #message-icon,
+    #success-icon {
+        margin: 20px auto 24px;
+        width: 72px;
+        display: block;
+        float: none !important;
+    }
 
-#success-frame .btn {
-    margin-bottom: 10px;
-    width: 80%;
-    max-width: 300px;
+    .btn {
+        margin-bottom: 10px;
+        width: 80%;
+        max-width: 300px;
+        border-radius: 10px;
+        padding: 12px 24px;
+        font-weight: 500;
+    }
 }
 
 @media (min-width: 768px) {
@@ -399,27 +729,36 @@ body {
     }
 }
 
-/* CANCEL APPOINTMENT
-   ------------------------------------------------------------------------- */
+/* ============================================================
+   CANCEL APPOINTMENT
+   ============================================================ */
 
 .booking-header-bar {
-    padding: 15px 0;
+    padding: 16px 0;
     margin: 0;
-    background: #f3f2e7;
-    border-bottom: 1px solid #e4e1c9;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
     text-align: center;
+}
+
+@media (min-width: 768px) {
+    .booking-header-bar {
+        text-align: left;
+    }
 }
 
 .ui-dialog .ui-dialog-title {
     font-size: 1.2em;
 }
 
-@media (min-width: 768px) {
-    .booking-header-bar {
-        padding: 15px 0;
-        margin: 0;
-        background: #f3f2e7;
-        border-bottom: 1px solid #e4e1c9;
-        text-align: left;
-    }
+/* ============================================================
+   POPOVER
+   ============================================================ */
+
+.popover .popover-title {
+    text-align: center;
+}
+
+.popover .popover-content #language-list .language {
+    margin: 15px 0;
 }

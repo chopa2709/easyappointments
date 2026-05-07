@@ -1,19 +1,19 @@
-#!/bin/bash
+﻿#!/bin/bash
 
-echo "➜ Ignore Permission Changes"
+echo "筐・Ignore Permission Changes"
 git config core.fileMode false
 
-echo "➜ Set Correct Permissions"
+echo "筐・Set Correct Permissions"
 chmod -R 777 storage
 
-echo "➜ Install Composer Dependencies"
+echo "筐・Install Composer Dependencies"
 [[ -d vendor ]] || composer install
 
-echo "➜ Install NPM Dependencies"
+echo "筐・Install NPM Dependencies"
 [[ -d node_modules ]] || npm install
 
-echo "➜ Build Project Assets"
+echo "筐・Build Project Assets"
 [[ -d assets/vendor ]] || npx gulp compile
 
-echo "➜ Listen To Incoming Requests"
+echo "筐・Listen To Incoming Requests"
 php-fpm
