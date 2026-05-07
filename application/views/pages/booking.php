@@ -12,7 +12,10 @@
 
 <!-- Select Service & Provider -->
 
-<?php component('booking_type_step', ['available_services' => vars('available_services')]); ?>
+<?php component('booking_type_step', [
+    'available_services' => vars('available_services'),
+    'available_providers' => vars('available_providers'),
+]); ?>
 
 <!-- Pick An Appointment Date -->
 
