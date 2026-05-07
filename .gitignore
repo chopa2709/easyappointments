@@ -1,19 +1,44 @@
-/*.zip
+# ── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
 /.idea/
-/.tmp-package/
-/build/
-/docs/apigen/html
-/docs/jsdoc/html
-/docs/plato/html
+/.vscode/settings.json
+
+# ── Environment / Secrets ──────────────────────────────────────────────────────
+# config.php holds DB credentials — use config-sample.php as template
+/config.php
+.env
+.env.*
+!.env.example
+
+# ── Build artifacts: JS ────────────────────────────────────────────────────────
+# Source .js files ARE tracked; only minified output is ignored.
+# Rebuild with: docker exec <container> npx gulp scripts
+/assets/js/**/*.min.js
+
+# ── Build artifacts: CSS ───────────────────────────────────────────────────────
+# All CSS is compiled from SCSS — .css files are generated output, not source.
+# Source .scss files ARE tracked.
+# Rebuild with: docker exec <container> npx gulp styles
+/assets/css/**/*.css
+
+# ── Build artifacts: Vendor assets ────────────────────────────────────────────
+# Third-party JS/CSS copied from node_modules by gulp.
+# Rebuild with: docker exec <container> npx gulp vendor
+/assets/vendor
+
+# ── Node / Composer ───────────────────────────────────────────────────────────
+/node_modules/
+/vendor/
+/npm-debug.log
+
+# ── Docker runtime data ────────────────────────────────────────────────────────
 /docker/mysql/
 /docker/baikal/
 /docker/openldap/
-/node_modules/
-/npm-debug.log
-/assets/js/**/*.min.js
-/assets/css/**/*.css
-/assets/vendor
-/config.php
+
+# ── Application runtime ────────────────────────────────────────────────────────
 /storage/backups/*
 !/storage/backups/.htaccess
 !/storage/backups/index.html
@@ -28,6 +53,12 @@
 !/storage/sessions/index.html
 /storage/uploads/*
 !/storage/uploads/index.html
-/vendor/
+
+# ── Temporary / Generated ─────────────────────────────────────────────────────
+/.tmp-package/
+/build/
 /metafile
-.DS_Store
+/*.zip
+/docs/apigen/html
+/docs/jsdoc/html
+/docs/plato/html
