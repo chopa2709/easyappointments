@@ -557,6 +557,17 @@ class Availability
 
             $current_hour = $start_hour;
 
+            // For flexible services, snap the start to the next 30-min boundary so that
+            // a non-30-min booking (e.g. 17:00-17:35) doesn't push all subsequent slots
+            // off the :00/:30 grid (17:35 → 18:00).
+            if ($service['availabilities_type'] !== AVAILABILITIES_TYPE_FIXED) {
+                $mins = (int) $current_hour->format('i');
+                if ($mins !== 0 && $mins !== 30) {
+                    $snap = $mins < 30 ? 30 - $mins : 60 - $mins;
+                    $current_hour->add(new DateInterval('PT' . $snap . 'M'));
+                }
+            }
+
             $diff = $current_hour->diff($end_hour);
 
             while ($diff->h * 60 + $diff->i >= (int) $service['duration'] && $diff->invert === 0) {
