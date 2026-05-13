@@ -390,6 +390,12 @@ body {
 
             &.wg-today .wg-wday,
             &.wg-today .wg-date { color: #1a1a1a; }
+
+            &.wg-sat .wg-wday,
+            &.wg-sat .wg-date { color: #2563eb; }
+
+            &.wg-sun .wg-wday,
+            &.wg-sun .wg-date { color: #dc2626; }
         }
 
         /* time labels */

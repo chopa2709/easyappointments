@@ -125,7 +125,11 @@ App.Pages.BookingWeeklyGrid = (function () {
         $grid.append('<div class="wg-corner"></div>');
         days.forEach((d) => {
             const ds  = d.format('YYYY-MM-DD');
-            const cls = 'wg-header' + (ds === today ? ' wg-today' : '');
+            const dow = d.day(); // 0=Sun, 6=Sat
+            const cls = 'wg-header' +
+                (ds === today ? ' wg-today' : '') +
+                (dow === 6 ? ' wg-sat' : '') +
+                (dow === 0 ? ' wg-sun' : '');
             $grid.append(
                 '<div class="' + cls + '">' +
                 '<span class="wg-wday">' + d.format('ddd') + '</span>' +
