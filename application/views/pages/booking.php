@@ -60,6 +60,6 @@
 <script src="<?= asset_url('assets/js/pages/booking.js') ?>"></script>
 <script src="<?= asset_url('assets/js/pages/booking_weekly_grid.js') ?>"></script>
 <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-<script src="<?= asset_url('assets/js/pages/booking_liff.js') ?>"></script>
+<script src="<?= base_url('assets/js/pages/booking_liff.js') ?>?<?= config('cache_busting_token') ?>"></script>
 
 <?php end_section('scripts'); ?>
